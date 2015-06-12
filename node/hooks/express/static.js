@@ -4,6 +4,30 @@ var url = require('url');
 var path = require("path");
 var fs = require("fs");
 
+exports.extToContentType = function (filename) {
+  // What content type should this be?
+  // TODO: This should use a MIME module.
+  var contentType;
+  if (filename.match(/\.js$/)) {
+    contentType = "text/javascript";
+  } else if (filename.match(/\.css$/)) {
+    contentType = "text/css";
+  } else if (filename.match(/\.html$/)) {
+    contentType = "text/html";
+  } else if (filename.match(/\.txt$/)) {
+    contentType = "text/plain";
+  } else if (filename.match(/\.png$/)) {
+    contentType = "image/png";
+  } else if (filename.match(/\.gif$/)) {
+    contentType = "image/gif";
+  } else if (filename.match(/\.ico$/)) {
+    contentType = "image/x-icon";
+  } else {
+    contentType = "application/octet-stream";
+  }
+  return contentType;
+}
+
 exports.expressCreateServer = function (hook_name, args, cb) {
   args.app.all(/\/static\/plugins\/([^\/]*)\/static\/(.*)/, function (req, res, next) {
     var url_path = url.parse(req.url).pathname.substring('/static/plugins/'.length);
@@ -13,11 +37,13 @@ exports.expressCreateServer = function (hook_name, args, cb) {
     var fs_path = path.normalize(path.join(plugins.plugins[plugin_name].package.path, url_path));
 
     fs.readFile(fs_path, function (error, content) {
-      if(ERR(error, function(){
+      if (error) {
+        console.error(error);
         res.writeHead(500, {});
         res.end();
-      })) return;
-      res.header("Content-Type", contentType);
+        return
+      }
+      res.header("Content-Type", exports.extToContentType(fs_path));
       res.writeHead(200, {});
       res.write(content);
       res.end();
