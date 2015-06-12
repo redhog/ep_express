@@ -1,0 +1,18 @@
+{
+  "parts": [
+    { "name": "express", "hooks": {
+      "start": "ep_express/node/hooks/express/main:start",
+      "createServer": "ep_express/node/hooks/express/main:createServer",
+      "restartServer": "ep_express/node/hooks/express/main:restartServer"
+      } },
+    { "name": "static", "hooks": { "expressCreateServer": "ep_express/node/hooks/express/static:expressCreateServer" } },
+    { "name": "i18n", "hooks": { "expressCreateServer": "ep_express/node/hooks/i18n:expressCreateServer" } },
+    { "name": "webaccess", "hooks": { "expressConfigure": "ep_express/node/hooks/express/webaccess:expressConfigure" } },
+    { "name": "errorhandling", "hooks": { "expressCreateServer": "ep_express/node/hooks/express/errorhandling:expressCreateServer" } },
+    { "name": "socketio", "hooks": { "expressCreateServer": "ep_express/node/hooks/express/socketio:expressCreateServer" } },
+    { "name": "adminplugins", "hooks": {
+      "expressCreateServer": "ep_express/node/hooks/express/adminplugins:expressCreateServer",
+      "socketio": "ep_express/node/hooks/express/adminplugins:socketio" } 
+    }
+  ]
+}
