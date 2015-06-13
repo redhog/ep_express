@@ -5,70 +5,30 @@ var settings = require('ep_carabiner/node/utils/settings').getSettings();
 var hooks = require('ep_carabiner/static/js/hooks');
 var expressSession = require('express-session');
 var randomString = require("ep_express/node/utils/randomstring");
+var webaccess = require("ep_express/node/webaccess");
+
+/* Authentication OR authorization failed. */
+exports.failure = function (args) {
+  return hooks.aCallFirst("authFailure", args, webaccess.hookResultMangle(function (ok) {
+    if (ok) return;
+
+    /* No plugin handler for invalid auth. Return Auth required
+     * Headers, delayed for 1 second, if authentication failed
+     * before. */
+    args.res.header('WWW-Authenticate', 'Basic realm="Protected Area"');
+    if (args.req.headers.authorization) {
+      setTimeout(function () {
+        args.res.status(401).send('Authentication required');
+      }, 1000);
+    } else {
+      args.res.status(401).send('Authentication required');
+    }
+  }));
+}
 
 
 //checks for basic http auth
 exports.basicAuth = function (req, res, next) {
-  var hookResultMangle = function (cb) {
-    return function (err, data) {
-      return cb(!err && data.length && data[0]);
-    }
-  }
-
-  var authorize = function (cb) {
-    // FIXME: Do real auth in a plugin somewhere...
-    return cb(true);
-
-    // Do not require auth for static paths and the API...this could be a bit brittle
-    if (req.path.match(/^\/(static|javascripts|pluginfw|api)/)) return cb(true);
-
-    if (req.path.indexOf('/admin') != 0) {
-      if (!settings.requireAuthentication) return cb(true);
-      if (!settings.requireAuthorization && req.session && req.session.user) return cb(true);
-    }
-
-    if (req.session && req.session.user && req.session.user.is_admin) return cb(true);
-
-    hooks.aCallFirst("authorize", {req: req, res:res, next:next, resource: req.path}, hookResultMangle(cb));
-  }
-
-  var authenticate = function (cb) {
-    // If auth headers are present use them to authenticate...
-    if (req.headers.authorization && req.headers.authorization.search('Basic ') === 0) {
-      var userpass = new Buffer(req.headers.authorization.split(' ')[1], 'base64').toString().split(":")
-      var username = userpass.shift();
-      var password = userpass.join(':');
-
-      if (settings.users[username] != undefined && settings.users[username].password == password) {
-        settings.users[username].username = username;
-        req.session.user = settings.users[username];
-        return cb(true);
-      }
-      return hooks.aCallFirst("authenticate", {req: req, res:res, next:next, username: username, password: password}, hookResultMangle(cb));
-    }
-    hooks.aCallFirst("authenticate", {req: req, res:res, next:next}, hookResultMangle(cb));
-  }
-
-
-  /* Authentication OR authorization failed. */
-  var failure = function () {
-    return hooks.aCallFirst("authFailure", {req: req, res:res, next:next}, hookResultMangle(function (ok) {
-    if (ok) return;
-      /* No plugin handler for invalid auth. Return Auth required
-       * Headers, delayed for 1 second, if authentication failed
-       * before. */
-      res.header('WWW-Authenticate', 'Basic realm="Protected Area"');
-      if (req.headers.authorization) {
-        setTimeout(function () {
-          res.status(401).send('Authentication required');
-        }, 1000);
-      } else {
-        res.status(401).send('Authentication required');
-      }
-    }));
-  }
-
-
   /* This is the actual authentication/authorization hoop. It is done in four steps:
 
      1) Try to just access the thing
@@ -79,14 +39,15 @@ exports.basicAuth = function (req, res, next) {
      Note that the process could stop already in step 3 with a redirect to login page.
 
   */
- 
-  authorize(function (ok) {
+  var args = {req: req, res:res, next:next, resource: req.path};
+
+  webaccess.authorize(args, function (ok) {
     if (ok) return next();
-    authenticate(function (ok) {
+    webaccess.authenticate(args, function (ok) {
       if (!ok) return failure();
-      authorize(function (ok) {
+      webaccess.authorize(args, function (ok) {
         if (ok) return next();
-        failure();
+        exports.failure(args);
       });
     });
   });

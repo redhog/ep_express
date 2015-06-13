@@ -28,6 +28,14 @@ exports.extToContentType = function (filename) {
   return contentType;
 }
 
+exports.authorize = function (hook_name, args, cb) {
+  if (args.resource.match(/^\/(static|javascripts|pluginfw|api)/)) {
+    return cb(null, [true]);
+  } else {
+    return cb(null, []);
+  }
+}
+
 exports.expressCreateServer = function (hook_name, args, cb) {
   args.app.all(/\/static\/plugins\/([^\/]*)\/static\/(.*)/, function (req, res, next) {
     var url_path = url.parse(req.url).pathname.substring('/static/plugins/'.length);
