@@ -1,24 +1,16 @@
 {
   "name"           : "ep_express",
-  "description"    : "A Etherpad based on node.js",
-  "homepage"       : "http://etherpad.org",
-  "keywords"       : ["etherpad", "realtime", "collaborative", "editor"],
-  "author"         : "Etherpad Foundation",
-  "contributors"   : [
-                      { "name": "John McLear" },
-                      { "name": "Hans Pinckaers" },
-                      { "name": "Robin Buse" },
-                      { "name": "Marcel Klehr" },
-                      { "name": "Peter Martischka" }
-                     ],
+  "description"    : "epressjs and socketio server based around the Carabiner plugin/hook framework",
+  "homepage"       : "http://github.com/redhog/carabiner",
+  "keywords"       : ["plugin", "hook", "epress", "socketio"],
+  "author"         : "Egil Möller",
+  "contributors"   : [],
   "dependencies"   : {
-                      "etherpad-yajsml"         : "0.0.2",
                       "request"                 : "2.55.0",
                       "requirejs"		: "2.1.17",
                       "etherpad-require-kernel" : "1.0.9",
                       "resolve"                 : "1.1.6",
                       "socket.io"               : "1.3.5",
-                      "ueberDB"                 : "0.2.15",
                       "express"                 : "4.12.3",
                       "express-session"         : "1.11.1",
                       "cookie-parser"           : "1.3.4",
@@ -46,7 +38,7 @@
                       "mocha"                   : "2.2.4",
                       "supertest"               : "0.15.0"
                      },
-  "bin":             { "etherpad-lite": "./node/server.js" },
+  "bin":             { },
   "devDependencies": {
                       "wd"      : "0.3.11"
                      },
@@ -54,7 +46,7 @@
                        "npm"  : ">=1.0"
                      },
   "repository"     : { "type" : "git",
-                       "url" : "http://github.com/ether/etherpad-lite.git"
+                       "url" : "http://github.com/redhog/ep_express.git"
                      },
-  "version"        : "1.5.6"
+  "version"        : "0.0.1"
 }

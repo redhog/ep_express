@@ -196,10 +196,12 @@ $(document).ready(function () {
     installed.list = data.installed
     sortPluginList(installed.list, 'name', /*ASC?*/true);
 
-    // filter out epl
-    installed.list = installed.list.filter(function(plugin) {
-      return plugin.name != 'ep_express'
-    })
+    // filter out Carabiner and ep_epress
+    /*
+      installed.list = installed.list.filter(function(plugin) {
+        return plugin.name != 'ep_carabiner' && plugin.name != 'ep_express'
+      })
+    */
 
     // remove all installed plugins (leave plugins that are still being installed)
     installed.list.forEach(function(plugin) {
