@@ -7,7 +7,7 @@
       } },
     { "name": "static", "hooks": {
       "expressCreateServer": "ep_express/node/hooks/express/static:expressCreateServer",
-      "aurhorize": "ep_express/node/hooks/express/static:authorize" 
+      "authorize": "ep_express/node/hooks/express/static:authorize" 
     } },
     { "name": "i18n", "hooks": { "expressCreateServer": "ep_express/node/hooks/i18n:expressCreateServer" } },
     { "name": "webaccess", "hooks": { "expressConfigure": "ep_express/node/hooks/express/webaccess:expressConfigure" } },

@@ -3,30 +3,7 @@ var _ = require("underscore");
 var url = require('url');
 var path = require("path");
 var fs = require("fs");
-
-exports.extToContentType = function (filename) {
-  // What content type should this be?
-  // TODO: This should use a MIME module.
-  var contentType;
-  if (filename.match(/\.js$/)) {
-    contentType = "text/javascript";
-  } else if (filename.match(/\.css$/)) {
-    contentType = "text/css";
-  } else if (filename.match(/\.html$/)) {
-    contentType = "text/html";
-  } else if (filename.match(/\.txt$/)) {
-    contentType = "text/plain";
-  } else if (filename.match(/\.png$/)) {
-    contentType = "image/png";
-  } else if (filename.match(/\.gif$/)) {
-    contentType = "image/gif";
-  } else if (filename.match(/\.ico$/)) {
-    contentType = "image/x-icon";
-  } else {
-    contentType = "application/octet-stream";
-  }
-  return contentType;
-}
+var mime = require('mime');
 
 exports.authorize = function (hook_name, args, cb) {
   if (args.resource.match(/^\/(static|javascripts|pluginfw|api)/)) {
@@ -51,7 +28,7 @@ exports.expressCreateServer = function (hook_name, args, cb) {
         res.end();
         return
       }
-      res.header("Content-Type", exports.extToContentType(fs_path));
+      res.header("Content-Type", mime.lookup(fs_path));
       res.writeHead(200, {});
       res.write(content);
       res.end();
