@@ -1,4 +1,4 @@
-var eejs = require('ep_express/node/eejs');
+var eejs = require('eejs');
 var versions = require('ep_carabiner/node/utils/versions');
 var installer = require('ep_carabiner/static/js/installer');
 var plugins = require('ep_carabiner/static/js/plugins');
