@@ -36,7 +36,7 @@ exports.expressCreateServer = function (hook_name, args, cb) {
   });
 
   // serve plugin definitions
-  args.app.get('/pluginfw/plugin-definitions.json', function (req, res, next) {
+  args.app.get('/plugin-definitions.json', function (req, res, next) {
 
     var clientParts = _(plugins.parts)
       .filter(function(part){ return _(part).has('client_hooks') });
