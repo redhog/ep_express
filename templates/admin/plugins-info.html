@@ -1,44 +1,27 @@
-<%
-  var plugins = require("ep_carabiner/static/js/plugins");
-%>
-<!doctype html>
-<html>
-  <head>
-    <title>Plugin information - Carabiner</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/static/plugins/ep_express/static/css/admin.css">
-  </head>
-  <body>
-    <div id="wrapper">
-      <div class="menu">
-        <h1><a href="../../">Carabiner</a></h1>
-        <ul>
-          <% e.begin_block("adminMenu"); %>
-          <li><a href="../plugins">Plugin manager</a> </li>
-          <li><a href="../plugins/info">Troubleshooting information</a> </li>
-          <% e.end_block(); %>
-        </ul>
-      </div>
+<% e.inherit("./page.html"); %>
 
-      <div class="innerwrapper">
-        <h2>Carabiner version</h2>
-        <p>Version number: <%= pkgVersion %></p>
-        <p>Git sha: <a href='https://github.com/redhog/ep_carabiner/commit/<%= gitCommit %>'><%= gitCommit %></a></p>
+<% e.begin_define_block("title"); %>Plugin information - Carabiner<% e.end_define_block(); %>
 
-        <h2>Installed plugins</h2>
-        <pre><%- plugins.formatPlugins().replace(", ","\n") %></pre>
+<% e.begin_define_block("body-content"); %>
 
-        <h2>Installed parts</h2>
-        <pre><%= plugins.formatParts() %></pre>
+  <%
+    var plugins = require("ep_carabiner/static/js/plugins");
+  %>
 
-        <h2>Installed hooks</h2>
-        <h3>Server side hooks</h3>
-        <div><%- plugins.formatHooks() %></div>
+  <h2>Carabiner version</h2>
+  <p>Version number: <%= pkgVersion %></p>
+  <p>Git sha: <a href='https://github.com/redhog/ep_carabiner/commit/<%= gitCommit %>'><%= gitCommit %></a></p>
 
-        <h3>Client side hooks</h3>
-        <div><%- plugins.formatHooks("client_hooks") %></div>
+  <h2>Installed plugins</h2>
+  <pre><%- plugins.formatPlugins().replace(", ","\n") %></pre>
 
-      </div>
-    </div>
-  </body>
-</html>
+  <h2>Installed parts</h2>
+  <pre><%= plugins.formatParts() %></pre>
+
+  <h2>Installed hooks</h2>
+  <h3>Server side hooks</h3>
+  <div><%- plugins.formatHooks() %></div>
+
+  <h3>Client side hooks</h3>
+  <div><%- plugins.formatHooks("client_hooks") %></div>
+<% e.end_define_block(); %>

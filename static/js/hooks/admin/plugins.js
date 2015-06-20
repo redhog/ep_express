@@ -1,5 +1,9 @@
 define([], function () {
   return {
+    documentReadyAdmin:  function (hook, args, cb) {
+      $('.menu ul').append("<li><a href='/admin/plugins'>Plugin manager</a></li>");
+      cb();
+    },
     documentReadyAdminPlugins: function (hook, args, cb) {
 
       var socket,
@@ -266,7 +270,9 @@ define([], function () {
       // check for updates every 5mins
       setInterval(function() {
         socket.emit('checkUpdates');
-      }, 1000*60*5)
+      }, 1000*60*5);
+
+      cb();
     }
   }
 });

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <% e.begin_block("head"); %>
+      <title><% e.begin_block("title"); %>Carabiner<% e.end_block(); %></title>
+
+      <% e.begin_block("meta"); %>
+        <meta name="viewport" content="width=device-width">
+      <% e.end_block(); %>
+
+      <% e.begin_block("styles"); %>
+      <% e.end_block(); %>
+
+      <% e.begin_block("scripts"); %>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/static/plugins/ep_express/static/js/jquery.js"></script>
+        <script type="text/javascript" src="/static/plugins/requirejs/static/require.js"></script>
+        <script type="text/javascript" src="/static/plugins/ep_express/static/js/main.js"></script>
+      <% e.end_block(); %>
+    <% e.end_block(); %>
+  </head>
+
+
+  <body>
+    <% e.begin_block("body"); %>
+      <div id="wrapper">
+
+        <% e.begin_block("errors"); %>
+          <% if (typeof errors != "undefined" && errors.length) { %>
+            <div class="errors">
+              <% errors.forEach(function (item) { %>
+                <div class="error"><%= item.toString() %></div>
+              <% }) %>
+            </div>
+          <% } %>
+        <% e.end_block(); %>
+
+        <% e.begin_block("body-wrapped"); %>
+        <% e.end_block(); %>
+
+      </div>
+    <% e.end_block(); %>
+  </body>
+</html>
