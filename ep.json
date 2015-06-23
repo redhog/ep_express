@@ -23,6 +23,9 @@
         "documentReadyAdminPlugins": "ep_express/static/js/hooks/admin/plugins:documentReadyAdminPlugins" } },
     { "name": "adminPluginsInfo", "pre": ["ep_express/adminPlugins"],
       "client_hooks": {
-        "documentReadyAdmin": "ep_express/static/js/hooks/admin/plugins_info:documentReadyAdmin" } }
+        "documentReadyAdmin": "ep_express/static/js/hooks/admin/plugins_info:documentReadyAdmin" },
+      "urlmap": {
+        "/foo/(path:.*)/(name:[^/]*)": "ep_express/templates/foo"
+      } }
   ]
 }

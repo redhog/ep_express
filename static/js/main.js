@@ -1,17 +1,12 @@
 var clientVars = {};
 
 (function () {
-  var pathComponents = location.pathname.split('/');
-
-  // Strip 'p' and the padname from the pathname and set as baseURL
-  var baseURL = pathComponents.slice(0,pathComponents.length-2).join('/') + '/';
-
   requirejs.config({
-    baseUrl: baseURL + "static/plugins",
+    baseUrl: "/static/plugins",
     paths: {
-      'underscore': baseURL + "static/plugins/underscore/static/underscore",
-      'async': baseURL + "static/plugins/async/static/lib/async",
-      'jquery': baseURL + "static/plugins/ep_express/static/js/rjquery"
+      'underscore': "/static/plugins/underscore/static/underscore",
+      'async': "/static/plugins/async/static/lib/async",
+      'jquery': "/static/plugins/ep_express/static/js/rjquery"
     },
   });
 
@@ -30,7 +25,6 @@ var clientVars = {};
         document.domain = document.domain; // for comet
       }
 
-      plugins.baseURL = baseURL;
       plugins.update(function () {
         hooks.plugins = plugins;
 
