@@ -1,32 +1,9 @@
 var eejs = require('eejs');
-var versions = require('ep_carabiner/node/utils/versions');
 var installer = require('ep_carabiner/static/js/installer');
 var plugins = require('ep_carabiner/static/js/plugins');
 var webaccess = require('ep_express/node/webaccess');
 var _ = require('underscore');
 var semver = require('semver');
-
-exports.expressCreateServer = function (hook_name, args, cb) {
-  args.app.get('/admin/plugins', function(req, res) {
-    var plugins = require("ep_carabiner/static/js/plugins");
-    var render_args = {
-      plugins: plugins.plugins,
-      search_results: {},
-      errors: [],
-    };
-    res.send( eejs.require("ep_express/templates/admin/plugins.html", render_args) );
-  });
-  args.app.get('/admin/plugins/info', function(req, res) {
-    var gitCommit = versions.getGitCommit();
-    var pkgVersion = versions.getPackageVersion();
-    res.send( eejs.require("ep_express/templates/admin/plugins-info.html",
-      {
-        gitCommit: gitCommit,
-        pkgVersion: pkgVersion
-      }) 
-    );
-  });
-}
 
 exports.socketio = function (hook_name, args, cb) {
   var io = args.io.of("/pluginfw/installer");

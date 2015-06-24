@@ -16,11 +16,14 @@
       "expressCreateServer": "ep_express/node/hooks/express/pages:expressCreateServer" } },
     { "name": "adminPlugins", "pre": ["ep_express/pages"],
       "hooks": {
-        "expressCreateServer": "ep_express/node/hooks/express/adminplugins:expressCreateServer",
         "socketio": "ep_express/node/hooks/express/adminplugins:socketio" },
       "client_hooks": {
         "documentReadyAdmin": "ep_express/static/js/hooks/admin/plugins:documentReadyAdmin",
-        "documentReadyAdminPlugins": "ep_express/static/js/hooks/admin/plugins:documentReadyAdminPlugins" } },
+        "documentReadyAdminPlugins": "ep_express/static/js/hooks/admin/plugins:documentReadyAdminPlugins" },
+      "urlmap": {
+        "/admin/plugins": "ep_express/templates/admin/plugins.html",
+        "/admin/plugins/info": "ep_express/templates/admin/plugins-info.html"
+      } },
     { "name": "adminPluginsInfo", "pre": ["ep_express/adminPlugins"],
       "client_hooks": {
         "documentReadyAdmin": "ep_express/static/js/hooks/admin/plugins_info:documentReadyAdmin" },

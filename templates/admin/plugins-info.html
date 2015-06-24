@@ -1,5 +1,12 @@
 <% e.inherit("./page.html"); %>
 
+<%
+  var versions = require('ep_carabiner/node/utils/versions');
+  var gitCommit = versions.getGitCommit();
+  var pkgVersion = versions.getPackageVersion();
+%>
+
+
 <% e.begin_define_block("title"); %>Plugin information - Carabiner<% e.end_define_block(); %>
 
 <% e.begin_define_block("body-content"); %>

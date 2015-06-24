@@ -34,7 +34,7 @@ function findAll(re, str) {
 }
 
 exports.matchPattern = function (pattern, str) {
-  var re = pattern.replace(/\(([a-zA-Z_0-9]*:)/g, '(');
+  var re = "^" + pattern.replace(/\(([a-zA-Z_0-9]*:)/g, '(') + "$";
   var keys = findAll(/\(([a-zA-Z_0-9]*):/g, pattern).map(function (match) { return match[1]; });
 
   var values = new RegExp(re).exec(str);
