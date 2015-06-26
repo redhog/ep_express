@@ -1,9 +1,5 @@
 define([], function () {
   return {
-    documentReadyAdmin:  function (hook, args, cb) {
-      $('.menu ul').append("<li><a href='/admin/plugins'>Plugin manager</a></li>");
-      cb();
-    },
     documentReadyAdminPlugins: function (hook, args, cb) {
 
       var socket,
