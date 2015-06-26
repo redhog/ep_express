@@ -12,21 +12,11 @@
     { "name": "webaccess", "hooks": { "expressConfigure": "ep_express/node/hooks/express/webaccess:expressConfigure" } },
     { "name": "errorhandling", "hooks": { "expressCreateServer": "ep_express/node/hooks/express/errorhandling:expressCreateServer" } },
     { "name": "socketio", "hooks": { "expressCreateServer": "ep_express/node/hooks/express/socketio:expressCreateServer" } },
-    { "name": "pages", "hooks": {
-      "expressCreateServer": "ep_express/node/hooks/express/pages:expressCreateServer" } },
-
-    { "name": "adminPlugins", "pre": ["ep_express/pages"],
+    { "name": "pages",
       "hooks": {
-        "socketio": "ep_express/node/hooks/express/adminplugins:socketio" },
-      "client_hooks": {
-        "documentReadyAdminPlugins": "ep_express/static/js/hooks/admin/plugins:documentReadyAdminPlugins" },
+        "expressCreateServer": "ep_express/node/hooks/express/pages:expressCreateServer" },
       "urlmap": {
-        "/admin/plugins": "ep_express/templates/admin/plugins.html"
-      } },
-
-    { "name": "adminPluginsInfo", "pre": ["ep_express/adminPlugins"],
-      "urlmap": {
-        "/admin/plugins/info": "ep_express/templates/admin/plugins-info.html"
-      } }
+        "/": "ep_express/templates/index.html"
+    } }
   ]
 }
