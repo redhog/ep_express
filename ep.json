@@ -14,6 +14,7 @@
     { "name": "socketio", "hooks": { "expressCreateServer": "ep_express/node/hooks/express/socketio:expressCreateServer" } },
     { "name": "pages",
       "hooks": {
+        "socketio": "ep_express/node/hooks/express/pages:socketio",
         "expressCreateServer": "ep_express/node/hooks/express/pages:expressCreateServer" },
       "urlmap": {
         "/": "ep_express/templates/index.html"
