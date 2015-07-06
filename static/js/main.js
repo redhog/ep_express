@@ -25,7 +25,7 @@ var clientVars = {};
         document.domain = document.domain; // for comet
       }
 
-      plugins.update(function () {
+      plugins.ensure(function () {
         hooks.plugins = plugins;
 
         // Call documentReady hook
