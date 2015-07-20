@@ -4,7 +4,6 @@ var url = require('url');
 var path = require("path");
 var fs = require("fs");
 var mime = require('mime');
-var npm = require("npm/lib/npm.js");
 
 exports.expressCreateServer = function (hook_name, args, cb) {
   args.app.all(/\/static\/plugins\/(requirejs)|(underscore)|(async)\/static\/(.*)/, function (req, res, next) {

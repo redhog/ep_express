@@ -44,5 +44,5 @@ exports.expressCreateServer = function (hook_name, args, cb) {
     });
   });
 
-  hooks.callAll("socketio", {"app": args.app, "io": io, "server": args.server});
+  hooks.aCallAll("socketio", {"app": args.app, "io": io, "server": args.server}, cb);
 }
