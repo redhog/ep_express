@@ -29,7 +29,7 @@ function loadSocketIoRegistrationList(cb) {
   async.each(
     registrations,
     function (registration, cb) {
-      plugins.loadModule(registration.handler_mod, function (mod) {
+      plugins.loadModule(registration.handler_mod, function (err, mod) {
         registration.handler = mod[registration.handler_fn];
         cb();
       });
