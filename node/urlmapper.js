@@ -1,4 +1,5 @@
 var plugins = require('ep_carabiner/static/js/plugins');
+var _ = require("underscore");
 
 function findAll(re, str) {
   var res = [];
@@ -43,7 +44,14 @@ exports.lookup = function (url, mapname) {
       for (var pattern in part[mapname]) {
         var match = exports.matchPattern(pattern, url);
         if (match != undefined) {
-          res.push({'view': part[mapname][pattern], 'args': match});
+          var view = part[mapname][pattern];
+          if (typeof(view) == "string") {
+            view = {fn: view};
+          }
+	  if (view.args) {
+            match = _.extend({}, view.args, match);
+          }
+          res.push({'view': view, 'args': match});
         }
       }
     }

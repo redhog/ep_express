@@ -2,6 +2,7 @@ var eejs = require("eejs")
 var hooks = require("ep_carabiner/static/js/hooks.js");
 var urlmapper = require("ep_express/node/urlmapper");
 var async = require('async');
+var _ = require('underscore');
 var plugins = require('ep_carabiner/static/js/plugins');
 var webaccess = require('ep_express/node/webaccess');
 
@@ -89,15 +90,14 @@ exports.socketio = function (hook_name, args, cb) {
 
 exports.render = function (req, res, next) {
   async.eachSeries(urlmapper.lookup(req.url), function (match, cb) {
-    if (match.view.indexOf(':') == -1) {
-      res.send(eejs.require(match.view, {args:match.args, req:req, urlmapper:urlmapper}));
+    if (match.view.fn.indexOf(':') == -1) {
+      res.send(eejs.require(match.view.fn, {args:match.args, req:req, urlmapper:urlmapper}));
     } else {
-      var view = match.view.split(':');
+      var view = match.view.fn.split(':');
       plugins.loadModule(view[0], function (err, mod) {
         mod[view[1]](match.args, req, res, cb);
       });
     }
-
   }, function (err) {
     if (err) console.erro(err);
     next();

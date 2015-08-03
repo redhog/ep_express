@@ -17,7 +17,11 @@
         "socketio": "ep_express/node/hooks/express/pages:socketio",
         "expressCreateServer": "ep_express/node/hooks/express/pages:expressCreateServer" },
       "urlmap": {
-        "/": "ep_express/templates/index.html"
+        "/": "ep_express/templates/index.html",
+        "/static/plugins/(plugin_name:[^\/]*)\/static\/(path:.*)/?": {
+          "fn":"ep_express/node/hooks/express/static:static",
+          "args": {"src": "(plugin_path:)/static/(path:)"}
+        }
     } }
   ]
 }
