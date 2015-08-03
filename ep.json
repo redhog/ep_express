@@ -7,7 +7,7 @@
     { "name": "static",
       "hooks": {
         "expressCreateServer": "ep_express/node/hooks/express/static:expressCreateServer",
-        "authorize": "ep_express/node/hooks/express/static:authorize",
+        "authorize": "ep_express/node/hooks/express/static:authorize"
       },
       "urlmap": {
         "/static/plugins/(plugin_name:[^\/]*)\/static\/(path:.*)/?": {
