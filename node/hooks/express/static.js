@@ -8,6 +8,7 @@ var mime = require('mime');
 
 
 exports.static = function (args, req, res, cb) {
+console.log("XXXXXXXXX", args);
   if (args.plugin_name) {
     args.plugin_path = plugins.plugins[args.plugin_name].package.path;
   }

@@ -4,9 +4,18 @@
       "start": "ep_express/node/hooks/express/main:start",
       "createServer": "ep_express/node/hooks/express/main:createServer",
       "restartServer": "ep_express/node/hooks/express/main:restartServer" } },
-    { "name": "static", "hooks": {
-      "expressCreateServer": "ep_express/node/hooks/express/static:expressCreateServer",
-      "authorize": "ep_express/node/hooks/express/static:authorize" } },
+    { "name": "static",
+      "hooks": {
+        "expressCreateServer": "ep_express/node/hooks/express/static:expressCreateServer",
+        "authorize": "ep_express/node/hooks/express/static:authorize",
+      },
+      "urlmap": {
+        "/static/plugins/(plugin_name:[^\/]*)\/static\/(path:.*)/?": {
+          "fn":"ep_express/node/hooks/express/static:static",
+          "args": {"src": "(plugin_path:)/static/(path:)"}
+        }
+      }
+    },
     { "name": "libs", "hooks": {
       "expressCreateServer": "ep_express/node/hooks/express/libs:expressCreateServer" } },
     { "name": "webaccess", "hooks": { "expressConfigure": "ep_express/node/hooks/express/webaccess:expressConfigure" } },
@@ -15,13 +24,11 @@
     { "name": "pages",
       "hooks": {
         "socketio": "ep_express/node/hooks/express/pages:socketio",
-        "expressCreateServer": "ep_express/node/hooks/express/pages:expressCreateServer" },
+        "expressCreateServer": "ep_express/node/hooks/express/pages:expressCreateServer"
+      },
       "urlmap": {
-        "/": "ep_express/templates/index.html",
-        "/static/plugins/(plugin_name:[^\/]*)\/static\/(path:.*)/?": {
-          "fn":"ep_express/node/hooks/express/static:static",
-          "args": {"src": "(plugin_path:)/static/(path:)"}
-        }
-    } }
+        "/": "ep_express/templates/index.html"
+      }
+    }
   ]
 }
