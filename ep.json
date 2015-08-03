@@ -10,9 +10,9 @@
         "authorize": "ep_express/node/hooks/express/static:authorize"
       },
       "urlmap": {
-        "/static/plugins/(plugin_name:[^\/]*)\/static\/(path:.*)/?": {
+        "/static/plugins/(package_name:[^\/]*)\/static\/(path:.*)/?": {
           "fn":"ep_express/node/hooks/express/static:static",
-          "args": {"src": "(plugin_path:)/static/(path:)"}
+          "args": {"src": "(package_path:)/static/(path:)"}
         }
       }
     },

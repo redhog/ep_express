@@ -8,9 +8,8 @@ var mime = require('mime');
 
 
 exports.static = function (args, req, res, cb) {
-console.log("XXXXXXXXX", args);
-  if (args.plugin_name) {
-    args.plugin_path = plugins.plugins[args.plugin_name].package.path;
+  if (args.package_name) {
+    args.package_path = plugins.packages[args.package_name].path;
   }
   var fs_path = path.normalize(urlmapper.reversePattern(args.src, args));
 
