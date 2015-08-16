@@ -51,7 +51,7 @@ function loadSocketIoRegistrations(cb) {
       namespaces[registration.namespace][registration.message] = registration.handler;
     });
 
-      console.log(["socket.io", namespaces]);
+    console.log(["socket.io", namespaces]);
     cb(namespaces);
   });
 }

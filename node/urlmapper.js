@@ -28,7 +28,7 @@ exports.matchPattern = function (pattern, str) {
 
 exports.reversePattern = function (pattern, args) {
   for (var key in args) {
-    pattern = pattern.replace(new RegExp('\\(' +  key + ':[^)]*\\)'), args[key]);
+    pattern = pattern.replace(new RegExp('\\(' +  key + ':[^)]*\\)'), args[key].toString());
   }
   return pattern;
 }
