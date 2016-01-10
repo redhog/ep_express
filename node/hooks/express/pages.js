@@ -30,8 +30,14 @@ function loadSocketIoRegistrationList(cb) {
   async.each(
     registrations,
     function (registration, cb) {
+        console.log("LOADING", registration.handler_mod);
       plugins.loadModule(registration.handler_mod, function (err, mod) {
-        registration.handler = mod[registration.handler_fn];
+        if (err) {
+          console.warn("LOADED ERROR", registration.handler_mod, JSON.stringify(err));
+        } else {
+          console.log("LOADED", registration.handler_mod, err, mod[registration.handler_fn]);
+          registration.handler = mod[registration.handler_fn];
+        }
         cb();
       });
     },
@@ -65,6 +71,7 @@ function registerSocketIoNamespace(io, namespaces) {
 
       Object.keys(registrations).map(function (message) {
         var handler = registrations[message];
+          console.log("socket.io register ", namespace, message);
         socket.on(message, function () {
           var handler_args = [channel, socket].concat(Array.prototype.slice.call(arguments));
           webaccess.authorize({req: socket.conn.request, resource: namespace + ":" + message}, function (authorized) {
